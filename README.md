@@ -1,68 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Description
 
-## Available Scripts
+React component that allows you to render JSON documents or serializable JavaScript objects written with TypeScript.
 
-In the project directory, you can run:
+Read a blog post about it below:
+[Recursive rendering in React: Building a universal JSON renderer](https://dev.to/baso53/recursive-rendering-in-react-building-a-universal-json-renderer-f59)
 
-### `npm start`
+# Usage
+- run `npm install react-json-component` in your React project
+- `import ReactJsonRenderer from 'react-json-component'` in your app
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+NOTE: Currently only supports ES6 modules
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# Example
+```tsx
+import * as React from 'react';
+import RecursiveComponent from 'react-json-component';
 
-### `npm test`
+const testJson = {
+  "_id": "5bc32f3f5fbd8ad01f8265fd",
+  "objectWithNulls": {
+     "firstNullValue": null,
+     "secondNullValue": null     
+  },
+  "longitude": 65.090852,
+  "tags": [
+    "ea",
+    "officia",
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Genevieve Cooke",
+      "ownFriends": {
+         "1": "Rebbeca",
+         "2": "Julia",
+         "3": "Chopper only"
+      },
+    },
+    {
+      "id": 1,
+      "name": "Eaton Buck"
+    }
+  ]
+};
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+class App extends React.Component {
+  public render() {
+    return (
+      <div className="App">
+          <RecursiveComponent
+            property={testJson}
+            propertyName="Root Property"
+            excludeBottomBorder={false}
+            rootProperty={true}/>
+      </div>
+    );
+  }
+}
+```
 
-### `npm run build`
+# Props
+```tsx
+<RecursiveProperty
+    property={json} // your JSON document
+    propertyName="root" // root dropdown menu label
+    excludeBottomBorder={true} // to include or exclude bottom border on the last entry in the list, default: false
+    emptyPropertyLabel="Property is empty" // text to display for null or undefined values
+    rootProperty={true} // to signify that this is the root of the document, from a user perspective always needs to be true
+    propertyNameProcessor={(name) => name + ": "} // function that processes property names, default: processes from camelCase to normal text
+/>
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+# Development
+- `git clone` or download this repository
+- run `npm install` in repository
+- run `npm start` to start the development server
